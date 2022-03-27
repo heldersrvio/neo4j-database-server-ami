@@ -1,0 +1,21 @@
+name: neo4j
+description: Installs neo4j.
+schemaVersion: 1.0
+
+phases:
+  - name: build
+    steps:
+      - name: Install
+        action: ExecuteBash
+        inputs:
+          commands:
+            - rpm --import https://debian.neo4j.com/neotechnology.gpg.key
+            - |
+              cat <<EOF>  /etc/yum.repos.d/neo4j.repo
+              [neo4j]
+              name=Neo4j Yum Repo
+              baseurl=http://yum.neo4j.com/stable
+              enabled=1
+              gpgcheck=1
+              EOF
+            - yum install neo4j -y

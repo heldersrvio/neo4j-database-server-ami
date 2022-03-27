@@ -1,0 +1,20 @@
+name: neo4j-test
+description: Tests neo4j installation and server.
+schemaVersion: 1.0
+
+phases:
+  - name: test
+    steps:
+      - name: TestInstallation
+        action: ExecuteBash
+        inputs:
+          commands:
+            - neo4j --version
+      - name: TestServer
+        action: ExecuteBash
+        inputs:
+          commands:
+            - neo4j start
+            - yum install telnet -y
+            - echo -e ''\x1dclose\x0d'' | telnet localhost 7687
+            - yum remove telnet -y
